@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject[] asteroidPrefabs;
-    [SerializeField] private float secondsBetweenAsteroids = 1.5f;
-    [SerializeField] private Vector2 forceRange;
+    [SerializeField] private GameObject[] _asteroidPrefabs;
+    [SerializeField] private float _secondsBetweenAsteroids = 1.5f;
+    [SerializeField] private Vector2 _forceRange;
 
-    private Camera mainCamera;
-    private float timer;
+    private Camera _mainCamera;
+    private float _timer;
 
     private void Awake()
     {
-        mainCamera = Camera.main;
+        _mainCamera = Camera.main;
     }
 
     private void Update()
     {
-        timer -= Time.deltaTime;
+        _timer -= Time.deltaTime;
 
-        if(timer <= 0)
+        if(_timer <= 0)
         {
             SpawnAsteroid();
 
-            timer += secondsBetweenAsteroids;
+            _timer += _secondsBetweenAsteroids;
         }
     }
 
@@ -63,10 +63,10 @@ public class AsteroidSpawner : MonoBehaviour
                 break;
         }
 
-        Vector3 worldSpawnPoint =  mainCamera.ViewportToWorldPoint(spawnPoint);
+        Vector3 worldSpawnPoint =  _mainCamera.ViewportToWorldPoint(spawnPoint);
         worldSpawnPoint.z = 0;
 
-        GameObject selectedAsteroid = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
+        GameObject selectedAsteroid = _asteroidPrefabs[Random.Range(0, _asteroidPrefabs.Length)];
 
         GameObject asteroidInstance =  Instantiate(selectedAsteroid,
             worldSpawnPoint,
@@ -74,6 +74,6 @@ public class AsteroidSpawner : MonoBehaviour
 
         Rigidbody rb = asteroidInstance.GetComponent<Rigidbody>();
 
-        rb.velocity = direction.normalized * Random.Range(forceRange.x, forceRange.y) ;
+        rb.velocity = direction.normalized * Random.Range(_forceRange.x, _forceRange.y) ;
     }
 }
